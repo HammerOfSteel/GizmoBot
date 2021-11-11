@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>OSS ADM CGI Monitoring</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<style>
+body {font-family: "Lato", sans-serif}
+.mySlides {display: none}
+</style>
+<style>
+/* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+.flip-card {
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #f1f1f1;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+  background-color: #bbb;
+  color: white;
+}
+
+/* Style the back side */
+.flip-card-back {
+  background-color: dodgerblue;
+  color: white;
+  transform: rotateY(180deg);
+}
+</style>
+<body>
+
+    <!-- Navbar -->
+    <div class="w3-top">
+    <div class="w3-bar w3-black w3-card">
+        <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+        <a href="#" class="w3-bar-item w3-button w3-padding-large">Health</a>
+        <a href="#band" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Logs</a>
+        <a href="#tour" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Inccidents</a>
+        <a href="#contact" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Contacs us</a>
+        <div class="w3-dropdown-hover w3-hide-small">
+        <button class="w3-padding-large w3-button" title="More">Documentation <i class="fa fa-caret-down"></i></button>     
+        <div class="w3-dropdown-content w3-bar-block w3-card-4">
+            <a href="/MUSE" class="w3-bar-item w3-button">MUSE</a>
+            <a href="/CACI" class="w3-bar-item w3-button">Cacti</a>
+            <a href="/ONSITE" class="w3-bar-item w3-button">OnSite</a>
+            <a href="/NNMi" class="w3-bar-item w3-button">NNMi</a>
+        </div>
+        </div>
+        <a href="javascript:void(0)" class="w3-padding-large w3-hover-red w3-hide-small w3-right"><i class="fa fa-search"></i></a>
+    </div>
+    </div>
+
+    <!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+    <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+    <a href="#band" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">MUSE</a>
+    <a href="#tour" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Cacti</a>
+    <a href="#contact" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">OnSite</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">NNMi SE/GL</a>
+    </div>
+
+<!-- Page content -->
+<div class="w3-content w3-black" style="max-width:100%;margin-top:46px">
+    <center>
+    <h2 class="w3-wide" style="background-color:white;color:black;">SYSTEM HEALTH</h2>
+    <div class="w3-black" style="height:100%">
+        <!-- Graphs -->
+        <div class="flip-card" style="margin-bottom:10.5%">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 style="font-size: 10em;">MUSE</h1>
+              </div>
+              <div class="flip-card-back">
+                <div id="museDash" style="text-align:center;width:80%;background-color:white;border-radius: 25px;margin-left: 10%;">
+                        <div id="chart" style="height: 200px;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flip-card" style="margin-bottom:10.5%">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 style="font-size: 10em;">Cacti</h1>
+              </div>
+              <div class="flip-card-back">
+                <div id="museDash" style="text-align:center;width:80%;background-color:white;border-radius: 25px;margin-left: 10%;">
+                        <div id="chart2" style="height: 200px;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <div class="flip-card" style="margin-bottom:10.5%">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 style="font-size: 10em;">OnSite</h1>
+              </div>
+              <div class="flip-card-back">
+                <div id="museDash" style="text-align:center;width:80%;background-color:white;border-radius: 25px;margin-left: 10%;">
+                        <div id="chart3" style="height: 200px;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flip-card" style="margin-bottom:9%;">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <h1 style="font-size: 10em;">NNMi</h1>
+              </div>
+              <div class="flip-card-back">
+                <div id="museDash" style="text-align:center;width:80%;background-color:white;border-radius: 25px;margin-left: 10%;">
+                        <div id="chart4" style="height: 200px;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </center>
+    <div style="height:20px;background-color: black;"></div>
+    </div>
+    <!-- The Band Section -->
+    <style>
+        #myInput {
+          background-image: url('/css/searchicon.png');
+          background-position: 10px 10px;
+          background-repeat: no-repeat;
+          width: 100%;
+          font-size: 16px;
+          padding: 12px 20px 12px 40px;
+          border: 1px solid #ddd;
+          margin-bottom: 12px;
+        }
+    
+        #myTable {
+          border-collapse: collapse;
+          width: 100%;
+          border: 1px solid #ddd;
+          font-size: 18px;
+        }
+    
+        #myTable th, #myTable td {
+          text-align: left;
+          padding: 12px;
+        }
+    
+        #myTable tr {
+          border-bottom: 1px solid #ddd;
+        }
+    
+        #myTable tr.header, #myTable tr:hover {
+          background-color: #f1f1f1;
+        }
+        </style>
+    <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band">
+        <div id="Lock" style="opacity: 1;background-color: white;margin: 5%;padding: 1%;color: white;display: block;">
+            <center><h1 style="opacity: 1;color: black">System Log archive</h1></center>
+            <div id="LogArchive">
+                <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Date/Time.." title="Type in a Date/Time" style="width: 50%">
+              <table id="myTable" style="color: black">
+                <tr class="header">
+                  <th onclick="sortTable(0)" style="width:25%;">Time</th>
+                  <th onclick="sortTable(1)" style="width:25%;">Message</th>
+                  <th onclick="sortTable(2)" style="width:25%;">System</th>
+                  <th onclick="sortTable(3)" style="width:25%;">Severity</th>
+                </tr>
+                <tr>
+                  <td>2021-07-01</td>
+                  <td>CPU < 95% for 10 min</td>
+                  <td>OnSite</td>
+                  <td>Major</td>
+                </tr>
+                <tr>
+                  <td>2021-06-30</td>
+                  <td>Response code 500: Integration to X is down</td>
+                  <td>NNMi</td>
+                  <td>Major</td>
+                </tr>
+                <tr>
+                  <td>2021-06-29</td>
+                  <td>Not enough swapspace left on /dev2</td>
+                  <td>NNMi</td>
+                  <td>Critical</td>
+                </tr>
+                <tr>
+                  <td>2021-06-28</td>
+                  <td>Broken CSV files at /file/to/path</td>
+                  <td>Cacti</td>
+                  <td>Major</td>
+                </tr>
+                <tr>
+                  <td>2021-06-27</td>
+                  <td>AutoPatching failed at: 2021-06-27 01:00:00</td>
+                  <td>MUSE</td>
+                  <td>Minor</td>
+                </tr>
+                <tr>
+                  <td>2021-06-26</td>
+                  <td>Server certificate with name blabla expires today at 21:30:00</td>
+                  <td>NNMi</td>
+                  <td>Major</td>
+                </tr>
+                <tr>
+                  <td>2021-06-25</td>
+                  <td>Password expiration notification for user DSD485</td>
+                  <td>MUSE</td>
+                  <td>Minor</td>
+                </tr>
+                <tr>
+                  <td>2021-06-24</td>
+                  <td>Generic error message lolz</td>
+                  <td>Cacti</td>
+                  <td>Critical</td>
+                </tr>
+              </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- The Tour Section -->
+    <div class="w3-black" id="tour">
+                  <br>
+        <style>
+            .container {
+              overflow: hidden;
+            }
+            .filterDiv {
+              float: left;
+              background-color: #2196F3;
+              color: #ffffff;
+              width: 100px;
+              line-height: 100px;
+              text-align: center;
+              margin: 2px;
+              display: none; /* Hidden by default */
+            }
+        
+            /* The "show" class is added to the filtered elements */
+            .show {
+              display: block;
+            }
+        
+            /* Style the buttons */
+            .btn {
+              border: none;
+              outline: none;
+              padding: 12px 16px;
+              background-color: #f1f1f1;
+              cursor: pointer;
+            }
+        
+            /* Add a light grey background on mouse-over */
+            .btn:hover {
+              background-color: #ddd;
+            }
+        
+            /* Add a dark background to the active button */
+            .btn.active {
+              background-color: #666;
+              color: white;
+            }
+            .Critical{
+             background-color: red;
+            }
+            .Major{
+             background-color: yellow;
+             color: black;
+            }
+            .Minor{
+             background-color: green;
+            }
+          </style>
+        <div id="Download" style="opacity: 1;background-color: white;margin: 5%;padding: 1%;color: white;display: block;">
+            <center>
+                <h1 style="opacity: 1;color: black">Issues/Tasks</h1>
+                <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                <!-- Control buttons -->
+              <div id="myBtnContainer">
+                <button class="btn active" onclick="filterSelection('all')"> Show all</button>
+                <button class="btn" onclick="filterSelection('MUSE')"> MUSE</button>
+                <button class="btn" onclick="filterSelection('NNMi')"> NNMi</button>
+                <button class="btn" onclick="filterSelection('Cacti')"> Cacti</button>
+                <button class="btn" onclick="filterSelection('OnSite')"> OnSite</button>
+                <br>
+                <button class="btn" onclick="filterSelection('Critical')"> Critical</button>
+                <button class="btn" onclick="filterSelection('Major')"> Major</button>
+                <button class="btn" onclick="filterSelection('Minor')"> Minor</button>
+              </div>
+              <br>
+              <!-- The filterable elements. Note that some have multiple class names (this can be used if they belong to multiple categories) -->
+              <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+              <div class="container">
+              <center>
+                <div class="filterDiv MUSE Minor">WO-115435</div>
+                <div class="filterDiv NNMi Critical">WO-226343</div>
+                <div class="filterDiv MUSE Minor">WO-739542</div>
+                <div class="filterDiv OnSite Major">WO-963623</div>
+                <div class="filterDiv MUSE Major">WO-116493</div>
+                <div class="filterDiv NNMi Minor">WO-105394</div>
+                <div class="filterDiv Cacti Major">WO-306345</div>
+                <div class="filterDiv Cacti Minor">WO-984732</div>
+                <div class="filterDiv NNMi Major">WO-406235</div>
+                <div class="filterDiv MUSE Minor">WO-406434</div>
+                <div class="filterDiv Cacti Critical">WO-460345</div>
+                <div class="filterDiv NNMi Major">WO-306795</div>
+                <div class="filterDiv Cacti Minor">WO-407457</div>
+              </center>
+              </div>
+          </center>
+        </div>
+        <br>
+    </div>
+
+    <!-- Ticket Modal -->
+    <div id="ticketModal" class="w3-modal">
+        <div class="w3-modal-content w3-animate-top w3-card-4">
+        <header class="w3-container w3-teal w3-center w3-padding-32"> 
+            <span onclick="document.getElementById('ticketModal').style.display='none'" 
+        class="w3-button w3-teal w3-xlarge w3-display-topright">×</span>
+            <h2 class="w3-wide"><i class="fa fa-suitcase w3-margin-right"></i>Tickets</h2>
+        </header>
+        <div class="w3-container">
+            <p><label><i class="fa fa-shopping-cart"></i> Tickets, $15 per person</label></p>
+            <input class="w3-input w3-border" type="text" placeholder="How many?">
+            <p><label><i class="fa fa-user"></i> Send To</label></p>
+            <input class="w3-input w3-border" type="text" placeholder="Enter email">
+            <button class="w3-button w3-block w3-teal w3-padding-16 w3-section w3-right">PAY <i class="fa fa-check"></i></button>
+            <button class="w3-button w3-red w3-section" onclick="document.getElementById('ticketModal').style.display='none'">Close <i class="fa fa-remove"></i></button>
+            <p class="w3-right">Need <a href="#" class="w3-text-blue">help?</a></p>
+        </div>
+        </div>
+    </div>
+
+    <!-- The Contact Section -->
+    <br>
+    <br>
+    <br>
+    <br>
+    <h2 class="w3-wide w3-center">CONTACT</h2>
+    <p class="w3-opacity w3-center"><i>Report an inccident/ Ask us a question</i></p>
+    <br>
+    <br>
+    <div class="w3-container w3-content w3-padding-64" style="max-width:800px;background-image: url(stockholm.jpg);background-size: 100%;;z-index: 100;" id="contact">
+
+        <div class="w3-row w3-padding-32">
+        <div class="w3-col m6 w3-large w3-margin-bottom">
+            <i class="fa fa-map-marker" style="width:30px"></i> Stockholm, SWEDEN<br>
+            <i class="fa fa-phone" style="width:30px"></i> Phone: +00 151515<br>
+            <i class="fa fa-envelope" style="width:30px"> </i> Email: OSSADM@CGI.com<br>
+        </div>
+        <div class="w3-col m6">
+            <form action="/action_page.php" target="_blank">
+            <div class="w3-row-padding" style="margin:0 -16px 8px -16px">
+                <div class="w3-half">
+                <input class="w3-input w3-border" type="text" placeholder="Name" required name="Name">
+                </div>
+                <div class="w3-half">
+                <input class="w3-input w3-border" type="text" placeholder="Email" required name="Email">
+                </div>
+            </div>
+            <input class="w3-input w3-border" type="text" placeholder="Message" required name="Message">
+            <button class="w3-button w3-black w3-section w3-right" type="submit">SEND</button>
+            </form>
+        </div>
+        </div>
+    </div>
+    
+    <!-- End Page Content -->
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <script>
+    // Automatic Slideshow - change image every 4 seconds
+    var myIndex = 0;
+    carousel();
+
+    function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";  
+    }
+    myIndex++;
+    if (myIndex > x.length) {myIndex = 1}    
+    x[myIndex-1].style.display = "block";  
+    setTimeout(carousel, 4000);    
+    }
+
+    // Used to toggle the menu on small screens when clicking on the menu button
+    function myFunction() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    var modal = document.getElementById('ticketModal');
+    window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+    }
+    </script>
+
+    </body>
+<!-- Load c3.css -->
+<link href="c3.css" rel="stylesheet">
+
+<!-- Load d3.js and c3.js -->
+<!--<script src="https://d3js.org/d3.v7.min.js"></script>-->
+<script src="d3-5.8.2.min.js"></script>
+<script src="c3.min.js"></script>
+<script>
+var chart = c3.generate({
+    bindto: '#chart',
+    data: {
+        columns: [
+            ['Uptime', 5, 15, 30, 40, 60, 50],
+            ['CPU', 20, 90, 90, 80, 95, 15],
+            ['RAM', 200, 200, 200, 400, 400, 200],
+            ['SPACE', 10, 7, 35, 67, 78, 28],
+            ['DBSPACE', 66, 77, 88, 99, 44, 22],
+            ['STATUS', 200, 200, 200, 400, 400, 200],
+        ],
+        type: 'bar',
+        types: {
+            Uptime: 'spline',
+            CPU: 'spline',
+            RAM: 'spline',
+            SPACE: 'spline',
+            DBSPACE: 'spline',
+            STATUS: 'spline',
+        },
+        groups: [
+            ['Uptime','CPU']
+        ]
+    }
+});
+</script>
+<script>
+var chart2 = c3.generate({
+    bindto: '#chart2',
+    data: {
+        columns: [
+            ['Uptime', 5, 15, 30, 40, 60, 50],
+            ['CPU', 20, 90, 90, 80, 95, 15],
+            ['RAM', 200, 200, 200, 400, 400, 200],
+            ['SPACE', 10, 7, 35, 67, 78, 28],
+            ['DBSPACE', 66, 77, 88, 99, 44, 22],
+            ['STATUS', 200, 200, 200, 400, 400, 200],
+        ],
+        type: 'bar',
+        types: {
+            Uptime: 'spline',
+            CPU: 'spline',
+            RAM: 'spline',
+            SPACE: 'spline',
+            DBSPACE: 'spline',
+            STATUS: 'spline',
+        },
+        groups: [
+            ['Uptime','CPU']
+        ]
+    }
+});
+</script>
+<script>
+var chart3 = c3.generate({
+    bindto: '#chart3',
+    data: {
+        columns: [
+            ['Uptime', 5, 15, 30, 40, 60, 50],
+            ['CPU', 20, 90, 90, 80, 95, 15],
+            ['RAM', 200, 200, 200, 400, 400, 200],
+            ['SPACE', 10, 7, 35, 67, 78, 28],
+            ['DBSPACE', 66, 77, 88, 99, 44, 22],
+            ['STATUS', 200, 200, 200, 400, 400, 200],
+        ],
+        type: 'bar',
+        types: {
+            Uptime: 'spline',
+            CPU: 'spline',
+            RAM: 'spline',
+            SPACE: 'spline',
+            DBSPACE: 'spline',
+            STATUS: 'spline',
+        },
+        groups: [
+            ['Uptime','CPU']
+        ]
+    }
+});
+</script>
+<script>
+var chart4 = c3.generate({
+    bindto: '#chart4',
+    data: {
+        columns: [
+            ['Uptime', 5, 15, 30, 40, 60, 50],
+            ['CPU', 20, 90, 90, 80, 95, 15],
+            ['RAM', 200, 200, 200, 400, 400, 200],
+            ['SPACE', 10, 7, 35, 67, 78, 28],
+            ['DBSPACE', 66, 77, 88, 99, 44, 22],
+            ['STATUS', 200, 200, 200, 400, 400, 200],
+        ],
+        type: 'bar',
+        types: {
+            Uptime: 'spline',
+            CPU: 'spline',
+            RAM: 'spline',
+            SPACE: 'spline',
+            DBSPACE: 'spline',
+            STATUS: 'spline',
+        },
+        groups: [
+            ['Uptime','CPU']
+        ]
+    }
+});
+</script>
+<script>
+    function myFunction() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }       
+      }
+    }
+    </script>
+    <script>
+    function sortTable(n) {
+      var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+      table = document.getElementById("myTable");
+      switching = true;
+      // Set the sorting direction to ascending:
+      dir = "asc";
+      /* Make a loop that will continue until
+      no switching has been done: */
+      while (switching) {
+        // Start by saying: no switching is done:
+        switching = false;
+        rows = table.rows;
+        /* Loop through all table rows (except the
+        first, which contains table headers): */
+        for (i = 1; i < (rows.length - 1); i++) {
+          // Start by saying there should be no switching:
+          shouldSwitch = false;
+          /* Get the two elements you want to compare,
+          one from current row and one from the next: */
+          x = rows[i].getElementsByTagName("TD")[n];
+          y = rows[i + 1].getElementsByTagName("TD")[n];
+          /* Check if the two rows should switch place,
+          based on the direction, asc or desc: */
+          if (dir == "asc") {
+            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+              // If so, mark as a switch and break the loop:
+              shouldSwitch = true;
+              break;
+            }
+          } else if (dir == "desc") {
+            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+              // If so, mark as a switch and break the loop:
+              shouldSwitch = true;
+              break;
+            }
+          }
+        }
+        if (shouldSwitch) {
+          /* If a switch has been marked, make the switch
+          and mark that a switch has been done: */
+          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+          switching = true;
+          // Each time a switch is done, increase this count by 1:
+          switchcount ++;
+        } else {
+          /* If no switching has been done AND the direction is "asc",
+          set the direction to "desc" and run the while loop again. */
+          if (switchcount == 0 && dir == "asc") {
+            dir = "desc";
+            switching = true;
+          }
+        }
+      }
+    }
+    </script>
+      <script type="text/javascript">
+        filterSelection("all")
+      function filterSelection(c) {
+        var x, i;
+        x = document.getElementsByClassName("filterDiv");
+        if (c == "all") c = "";
+        // Add the "show" class (display:block) to the filtered elements, and remove the "show" class from the elements that are not selected
+        for (i = 0; i < x.length; i++) {
+          w3RemoveClass(x[i], "show");
+          if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+        }
+      }
+  
+      // Show filtered elements
+      function w3AddClass(element, name) {
+        var i, arr1, arr2;
+        arr1 = element.className.split(" ");
+        arr2 = name.split(" ");
+        for (i = 0; i < arr2.length; i++) {
+          if (arr1.indexOf(arr2[i]) == -1) {
+            element.className += " " + arr2[i];
+          }
+        }
+      }
+  
+      // Hide elements that are not selected
+      function w3RemoveClass(element, name) {
+        var i, arr1, arr2;
+        arr1 = element.className.split(" ");
+        arr2 = name.split(" ");
+        for (i = 0; i < arr2.length; i++) {
+          while (arr1.indexOf(arr2[i]) > -1) {
+            arr1.splice(arr1.indexOf(arr2[i]), 1);
+          }
+        }
+        element.className = arr1.join(" ");
+      }
+  
+      // Add active class to the current control button (highlight it)
+      var btnContainer = document.getElementById("myBtnContainer");
+      var btns = btnContainer.getElementsByClassName("btn");
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].addEventListener("click", function() {
+          var current = document.getElementsByClassName("active");
+          current[0].className = current[0].className.replace(" active", "");
+          this.className += " active";
+        });
+      }
+    </script>
+</html>

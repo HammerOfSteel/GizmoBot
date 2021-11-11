@@ -1,0 +1,27 @@
+{
+  "name": "gizmobot",
+  "version": "1.0.0",
+  "description": "nodeJS webapp implementation of snmp-monitoring with sweet graphs and a configuration manager to add new monitoring",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "net-snmp": "^3.5.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HammerOfSteel/GizmoBot.git"
+  },
+  "keywords": [
+    "nodejs",
+    "snmp"
+  ],
+  "author": "Eric Stålhammar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HammerOfSteel/GizmoBot/issues"
+  },
+  "homepage": "https://github.com/HammerOfSteel/GizmoBot#readme"
+}
