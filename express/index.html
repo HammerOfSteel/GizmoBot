@@ -18,7 +18,7 @@ body {font-family: "Lato", sans-serif}
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
   background-color: transparent;
-  width: 100%;
+  width: 50%;
   height: 100%;
   border: 1px solid #f1f1f1;
   perspective: 1000px; /* Remove this if you don't want the 3D effect */
@@ -52,6 +52,7 @@ body {font-family: "Lato", sans-serif}
 .flip-card-front {
   background-color: #bbb;
   color: white;
+  width: 100%;
 }
 
 /* Style the back side */
@@ -74,10 +75,10 @@ body {font-family: "Lato", sans-serif}
         <div class="w3-dropdown-hover w3-hide-small">
         <button class="w3-padding-large w3-button" title="More">Documentation <i class="fa fa-caret-down"></i></button>     
         <div class="w3-dropdown-content w3-bar-block w3-card-4">
-            <a href="/MUSE" class="w3-bar-item w3-button">MUSE</a>
-            <a href="/CACI" class="w3-bar-item w3-button">Cacti</a>
-            <a href="/ONSITE" class="w3-bar-item w3-button">OnSite</a>
-            <a href="/NNMi" class="w3-bar-item w3-button">NNMi</a>
+            <a href="/SYS1" class="w3-bar-item w3-button">System 1</a>
+            <a href="/SYS2" class="w3-bar-item w3-button">System 2</a>
+            <a href="/SYS3" class="w3-bar-item w3-button">System 3</a>
+            <a href="/SYS4" class="w3-bar-item w3-button">System 4</a>
         </div>
         </div>
         <a href="javascript:void(0)" class="w3-padding-large w3-hover-red w3-hide-small w3-right"><i class="fa fa-search"></i></a>
@@ -86,10 +87,10 @@ body {font-family: "Lato", sans-serif}
 
     <!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
     <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
-    <a href="#band" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">MUSE</a>
-    <a href="#tour" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Cacti</a>
-    <a href="#contact" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">OnSite</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">NNMi SE/GL</a>
+    <a href="#band" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">System 1</a>
+    <a href="#tour" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">system 2</a>
+    <a href="#contact" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">System 3</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">System 4</a>
     </div>
 
 <!-- Page content -->
@@ -101,11 +102,11 @@ body {font-family: "Lato", sans-serif}
         <div class="flip-card" style="margin-bottom:10.5%">
             <div class="flip-card-inner">
               <div class="flip-card-front">
-                <h1 style="font-size: 10em;">MUSE</h1>
+                <h1 style="font-size: 10em;">System-1</h1>
               </div>
               <div class="flip-card-back">
-                <div id="museDash" style="text-align:center;width:80%;background-color:white;border-radius: 25px;margin-left: 10%;">
-                        <div id="chart" style="height: 200px;"></div>
+                <div id="System-1Dash" style="text-align:center;width:80%;background-color:white;border-radius: 25px;margin-left: 10%;">
+                        <div id="chart" style="height: 200px;color:black"></div>
                 </div>
               </div>
             </div>
@@ -113,11 +114,11 @@ body {font-family: "Lato", sans-serif}
           <div class="flip-card" style="margin-bottom:10.5%">
             <div class="flip-card-inner">
               <div class="flip-card-front">
-                <h1 style="font-size: 10em;">Cacti</h1>
+                <h1 style="font-size: 10em;">System-2</h1>
               </div>
               <div class="flip-card-back">
-                <div id="museDash" style="text-align:center;width:80%;background-color:white;border-radius: 25px;margin-left: 10%;">
-                        <div id="chart2" style="height: 200px;"></div>
+                <div id="System-1Dash" style="text-align:center;width:80%;background-color:white;border-radius: 25px;margin-left: 10%;">
+                        <div id="chart2" style="height: 200px;color:black"></div>
                 </div>
               </div>
             </div>
@@ -125,11 +126,11 @@ body {font-family: "Lato", sans-serif}
         <div class="flip-card" style="margin-bottom:10.5%">
             <div class="flip-card-inner">
               <div class="flip-card-front">
-                <h1 style="font-size: 10em;">OnSite</h1>
+                <h1 style="font-size: 10em;">System-3</h1>
               </div>
               <div class="flip-card-back">
-                <div id="museDash" style="text-align:center;width:80%;background-color:white;border-radius: 25px;margin-left: 10%;">
-                        <div id="chart3" style="height: 200px;"></div>
+                <div id="System-1Dash" style="text-align:center;width:80%;background-color:white;border-radius: 25px;margin-left: 10%;">
+                        <div id="chart3" style="height: 200px;color:black"></div>
                 </div>
               </div>
             </div>
@@ -137,11 +138,11 @@ body {font-family: "Lato", sans-serif}
           <div class="flip-card" style="margin-bottom:9%;">
             <div class="flip-card-inner">
               <div class="flip-card-front">
-                <h1 style="font-size: 10em;">NNMi</h1>
+                <h1 style="font-size: 10em;">System-4</h1>
               </div>
               <div class="flip-card-back">
-                <div id="museDash" style="text-align:center;width:80%;background-color:white;border-radius: 25px;margin-left: 10%;">
-                        <div id="chart4" style="height: 200px;"></div>
+                <div id="System-1Dash" style="text-align:center;width:80%;background-color:white;border-radius: 25px;margin-left: 10%;">
+                        <div id="chart4" style="height: 200px;color:black"></div>
                 </div>
               </div>
             </div>
@@ -197,49 +198,49 @@ body {font-family: "Lato", sans-serif}
                 <tr>
                   <td>2021-07-01</td>
                   <td>CPU < 95% for 10 min</td>
-                  <td>OnSite</td>
+                  <td>System-3</td>
                   <td>Major</td>
                 </tr>
                 <tr>
                   <td>2021-06-30</td>
                   <td>Response code 500: Integration to X is down</td>
-                  <td>NNMi</td>
+                  <td>System-4</td>
                   <td>Major</td>
                 </tr>
                 <tr>
                   <td>2021-06-29</td>
                   <td>Not enough swapspace left on /dev2</td>
-                  <td>NNMi</td>
+                  <td>System-4</td>
                   <td>Critical</td>
                 </tr>
                 <tr>
                   <td>2021-06-28</td>
                   <td>Broken CSV files at /file/to/path</td>
-                  <td>Cacti</td>
+                  <td>System-2</td>
                   <td>Major</td>
                 </tr>
                 <tr>
                   <td>2021-06-27</td>
                   <td>AutoPatching failed at: 2021-06-27 01:00:00</td>
-                  <td>MUSE</td>
+                  <td>System-1</td>
                   <td>Minor</td>
                 </tr>
                 <tr>
                   <td>2021-06-26</td>
                   <td>Server certificate with name blabla expires today at 21:30:00</td>
-                  <td>NNMi</td>
+                  <td>System-4</td>
                   <td>Major</td>
                 </tr>
                 <tr>
                   <td>2021-06-25</td>
                   <td>Password expiration notification for user DSD485</td>
-                  <td>MUSE</td>
+                  <td>System-1</td>
                   <td>Minor</td>
                 </tr>
                 <tr>
                   <td>2021-06-24</td>
                   <td>Generic error message lolz</td>
-                  <td>Cacti</td>
+                  <td>System-2</td>
                   <td>Critical</td>
                 </tr>
               </table>
@@ -307,10 +308,10 @@ body {font-family: "Lato", sans-serif}
                 <!-- Control buttons -->
               <div id="myBtnContainer">
                 <button class="btn active" onclick="filterSelection('all')"> Show all</button>
-                <button class="btn" onclick="filterSelection('MUSE')"> MUSE</button>
-                <button class="btn" onclick="filterSelection('NNMi')"> NNMi</button>
-                <button class="btn" onclick="filterSelection('Cacti')"> Cacti</button>
-                <button class="btn" onclick="filterSelection('OnSite')"> OnSite</button>
+                <button class="btn" onclick="filterSelection('System-1')"> System-1</button>
+                <button class="btn" onclick="filterSelection('System-4')"> System-4</button>
+                <button class="btn" onclick="filterSelection('System-2')"> System-2</button>
+                <button class="btn" onclick="filterSelection('System-3')"> System-3</button>
                 <br>
                 <button class="btn" onclick="filterSelection('Critical')"> Critical</button>
                 <button class="btn" onclick="filterSelection('Major')"> Major</button>
@@ -321,19 +322,19 @@ body {font-family: "Lato", sans-serif}
               <hr style="height:2px;border-width:0;color:gray;background-color:gray">
               <div class="container">
               <center>
-                <div class="filterDiv MUSE Minor">WO-115435</div>
-                <div class="filterDiv NNMi Critical">WO-226343</div>
-                <div class="filterDiv MUSE Minor">WO-739542</div>
-                <div class="filterDiv OnSite Major">WO-963623</div>
-                <div class="filterDiv MUSE Major">WO-116493</div>
-                <div class="filterDiv NNMi Minor">WO-105394</div>
-                <div class="filterDiv Cacti Major">WO-306345</div>
-                <div class="filterDiv Cacti Minor">WO-984732</div>
-                <div class="filterDiv NNMi Major">WO-406235</div>
-                <div class="filterDiv MUSE Minor">WO-406434</div>
-                <div class="filterDiv Cacti Critical">WO-460345</div>
-                <div class="filterDiv NNMi Major">WO-306795</div>
-                <div class="filterDiv Cacti Minor">WO-407457</div>
+                <div class="filterDiv System-1 Minor">WO-115435</div>
+                <div class="filterDiv System-4 Critical">WO-226343</div>
+                <div class="filterDiv System-1 Minor">WO-739542</div>
+                <div class="filterDiv System-3 Major">WO-963623</div>
+                <div class="filterDiv System-1 Major">WO-116493</div>
+                <div class="filterDiv System-4 Minor">WO-105394</div>
+                <div class="filterDiv System-2 Major">WO-306345</div>
+                <div class="filterDiv System-2 Minor">WO-984732</div>
+                <div class="filterDiv System-4 Major">WO-406235</div>
+                <div class="filterDiv System-1 Minor">WO-406434</div>
+                <div class="filterDiv System-2 Critical">WO-460345</div>
+                <div class="filterDiv System-4 Major">WO-306795</div>
+                <div class="filterDiv System-2 Minor">WO-407457</div>
               </center>
               </div>
           </center>
@@ -375,8 +376,8 @@ body {font-family: "Lato", sans-serif}
         <div class="w3-row w3-padding-32">
         <div class="w3-col m6 w3-large w3-margin-bottom">
             <i class="fa fa-map-marker" style="width:30px"></i> Stockholm, SWEDEN<br>
-            <i class="fa fa-phone" style="width:30px"></i> Phone: +00 151515<br>
-            <i class="fa fa-envelope" style="width:30px"> </i> Email: OSSADM@CGI.com<br>
+            <i class="fa fa-phone" style="width:30px"></i> Phone: +46 08 123 45<br>
+            <i class="fa fa-envelope" style="width:30px"> </i> Email: admin@company.com<br>
         </div>
         <div class="w3-col m6">
             <form action="/action_page.php" target="_blank">
